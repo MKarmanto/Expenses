@@ -1,0 +1,14 @@
+GET http://localhost:5000/api/expenses
+
+###
+
+POST http://localhost:5000/api/expenses
+Content-Type: application/json
+
+{
+    "date": "2022-01-15",
+    "amount": 955.00,
+    "description": "test2"
+}
+
+###
