@@ -12,19 +12,19 @@ const getExpenses = async (req, res) => {
   }
 };
 
-// const getByID = async (req, res) => {
-//   const id = parseInt(req.params.id, 10);
-//   try {
-//     const response = await getById(id);
-//     if (response.length === 1) {
-//       res.send(response[0]);
-//     } else {
-//       res.status(404).send("Not Found");
-//     }
-//   } catch (e) {
-//     res.sendStatus(500);
-//   }
-// };
+const getByID = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  try {
+    const response = await expenses.getById(id);
+    if (response.length === 1) {
+      res.send(response[0]);
+    } else {
+      res.status(404).send("Not Found");
+    }
+  } catch (e) {
+    res.sendStatus(500);
+  }
+};
 
 // const getByMonth = async (req, res) => {
 //   const month = req.params.month;
@@ -109,13 +109,12 @@ const deleteById = async (req, res) => {
 
     const response = await expenses.deleteById(id);
     if (response.affectedRows === 1) {
-      res.status(200).send("expense deleted");
+      res.status(200).send("Expense deleted");
     }
   } catch (e) {
     res.sendStatus(500);
   }
 };
 
-module.exports = { getExpenses, addExpense, deleteById };
-// getByID,
+module.exports = { getExpenses, addExpense, deleteById, getByID };
 // updateById,

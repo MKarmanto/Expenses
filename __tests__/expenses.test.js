@@ -71,7 +71,7 @@ describe("expenses routes", () => {
         description: "test3",
       };
       const postResponse = await request(app)
-        .post("/api/exepenses")
+        .post("/api/expenses")
         .set("Accept", "application/json")
         .send(expense);
       const postId = postResponse.body.id;

@@ -10,15 +10,19 @@ const expenses = {
         resolve(result);
       });
     }),
-  // getById: (id) =>
-  //   new Promise((resolve, reject) => {
-  //     connection.query("SELECT * FROM expenses WHERE id = ?", id, (err, result) => {
-  //       if (err) {
-  //         reject(err);
-  //       }
-  //       resolve(result);
-  //     });
-  //   }),
+  getById: (id) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT * FROM expenses WHERE id = ?",
+        id,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(result);
+        }
+      );
+    }),
   // getByMonth: (month) =>
   //   new Promise((resolve, reject) => {
   //     query(
