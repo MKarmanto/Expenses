@@ -26,19 +26,19 @@ const getByID = async (req, res) => {
   }
 };
 
-// const getByMonth = async (req, res) => {
-//   const month = req.params.month;
-//   try {
-//     const response = await getByMonth(month);
-//     if (response) {
-//       res.send(response);
-//     } else {
-//       res.status(404).send("Not Found");
-//     }
-//   } catch (e) {
-//     res.sendStatus(500);
-//   }
-// };
+const getByMonth = async (req, res) => {
+  const month = req.params.month;
+  try {
+    const response = await getByMonth(month);
+    if (response) {
+      res.send(response);
+    } else {
+      res.status(404).send("Not Found");
+    }
+  } catch (e) {
+    res.sendStatus(500);
+  }
+};
 
 const addExpense = async (req, res) => {
   const schema = Joi.object({
@@ -116,4 +116,11 @@ const deleteById = async (req, res) => {
   }
 };
 
-module.exports = { getExpenses, addExpense, deleteById, getByID, updateById };
+module.exports = {
+  getExpenses,
+  addExpense,
+  deleteById,
+  getByID,
+  updateById,
+  getByMonth,
+};

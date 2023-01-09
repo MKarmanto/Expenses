@@ -16,18 +16,18 @@ describe("expenses routes", () => {
       expect(response.status).toBe(200);
       expect(response.type).toBe("application/json");
     });
-    // test("should return expenses from specific month"),
-    //   async () => {
-    //     const response = await request(app).get("/expenses?month=2021-08");
-    //     expect(response.status).toBe(200);
-    //     expect(response.type).toBe("application/json");
-    //   };
-    // test("should return expenses sorted by date"),
-    //   async () => {
-    //     const response = await request(app).get("/expenses?sort=date");
-    //     expect(response.status).toBe(200);
-    //     expect(response.type).toBe("application/json");
-    //   };
+    test("should return expenses from specific month"),
+      async () => {
+        const response = await request(app).get("/expenses?month=2021-08");
+        expect(response.status).toBe(200);
+        expect(response.type).toBe("application/json");
+      };
+    test("should return expenses sorted by date"),
+      async () => {
+        const response = await request(app).get("/expenses?sort=date");
+        expect(response.status).toBe(200);
+        expect(response.type).toBe("application/json");
+      };
   });
 
   describe("POST /expenses", () => {
