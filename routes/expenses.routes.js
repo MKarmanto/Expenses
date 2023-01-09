@@ -5,14 +5,15 @@ const {
   addExpense,
   deleteById,
   getByID,
+  updateById,
 } = require("../controllers/expenses.controllers");
 
 const router = express.Router();
 
 router.get("/", getExpenses);
-router.get("/:id", getByID);
 router.post("/", addExpense);
-// router.put("/", updateById);
 router.delete("/:id", deleteById);
+router.get("/:id", getByID);
+router.put("/", updateById);
 
 module.exports = router;

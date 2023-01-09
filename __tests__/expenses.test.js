@@ -7,7 +7,7 @@ const {
 } = require("@jest/globals");
 const request = require("supertest");
 const app = require("../app.js");
-//const connection = require("../db/connection.js");
+const connection = require("../database/db.js");
 
 describe("expenses routes", () => {
   describe("GET /expenses", () => {
@@ -29,7 +29,7 @@ describe("expenses routes", () => {
     //     expect(response.type).toBe("application/json");
     //   };
   });
-  //TODO: delete rows affected rows after each test
+
   describe("POST /expenses", () => {
     let postId;
     test("should create a new expense", async () => {
@@ -42,7 +42,7 @@ describe("expenses routes", () => {
         .post("/api/expenses")
         .set("Accept", "application/json")
         .send(expense);
-      postId = response.body.id;
+      // postId = response.body.id;
 
       expect(response.status).toEqual(201);
       expect(response.headers["content-type"]).toMatch(/json/);
@@ -86,40 +86,45 @@ describe("expenses routes", () => {
     });
   });
 
-  //   describe("PUT /expenses/:id", () => {
-  //     let postId;
-  //     beforeAll(async () => {
-  //       const expense = {
-  //         date: "2023-01-01",
-  //         amount: 100,
-  //         description: "test",
-  //       };
-  //       const postResponse = await request(app).post("/expenses").send(expense);
-  //       postId = postResponse.body.insertId;
-  //     });
+  describe("PUT /expenses/", () => {
+    let postId;
+    beforeAll(async () => {
+      const expense = {
+        date: "2023-01-01",
+        amount: 100,
+        description: "test3",
+      };
+      const postResponse = await request(app)
+        .post("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      postId = postResponse.body.id;
+    });
 
-  //     test("should update the expense with the id", async () => {
-  //       const expense = {
-  //         id: postId,
-  //         date: "2023-01-01",
-  //         amount: 200,
-  //         description: "testUpdated",
-  //       };
-  //       const response = await (await request(app).put(`/expenses/${postId}`))
-  //         .set("Accept", "application/json")
-  //         .send(expense);
-  //       expect(response.status).toBe(200);
-  //       expect(response.type).toEqual(postId);
-  //       expect(response.body.date).toEqual("2023-01-01");
-  //       expect(response.body.amount).toEqual(200);
-  //       expect(response.body.description).toEqual("testUpdated");
-  //     });
+    test("should update the expense with the id", async () => {
+      const expense = {
+        id: postId,
+        date: "2022-01-15",
+        amount: 200,
+        description: "testUpdated",
+      };
 
-  //     afterAll(async () => {
-  //       await request(app)
-  //         .delete(`/expenses/${postId}`)
-  //         .set("Accept", "application/json");
-  //       connection.end();
-  //     });
-  //   });
+      const response = await request(app)
+        .put("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      expect(response.status).toEqual(200);
+      expect(response.body.id).toEqual(postId);
+      expect(response.body.date).toEqual("2022-01-15");
+      expect(response.body.amount).toEqual(200);
+      expect(response.body.description).toEqual("testUpdated");
+    });
+
+    afterAll(async () => {
+      await request(app)
+        .delete(`/expenses/${postId}`)
+        .set("Accept", "application/json");
+      connection.end();
+    });
+  });
 });

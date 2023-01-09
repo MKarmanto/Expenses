@@ -62,19 +62,21 @@ const expenses = {
         }
       );
     }),
-  // updateById: (expense) =>
-  //   new Promise((resolve, reject) => {
-  //     query(
-  //       "UPDATE expenses SET date = ?, `amount` = ?, description = ? WHERE id = ?;",
-  //       [expense.date, expense.amount, expense.description, expense.id],
-  //       (err, result) => {
-  //         if (err) {
-  //           reject(err);
-  //         }
-  //         resolve(result);
-  //       }
-  //     );
-  //   }),
+
+  updateById: (expense) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "UPDATE expenses SET date = ?, amount = ?, description = ? WHERE id = ?;",
+        [expense.date, expense.amount, expense.description, expense.id],
+        (err, result) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(result);
+        }
+      );
+    }),
+
   deleteById: (id) =>
     new Promise((resolve, reject) => {
       connection.query(

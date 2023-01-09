@@ -68,35 +68,35 @@ const addExpense = async (req, res) => {
   }
 };
 
-// const updateById = async (req, res) => {
-//   const schema = object({
-//     id: number().integer().required(),
-//     month: string().min(2).required(),
-//     usage: number().integer().required(),
-//     cost: number().integer().required(),
-//   });
-//   const { error } = schema.validate(req.body);
-//   if (error) {
-//     res.status(400).send(error.details[0].message);
-//     return;
-//   }
+const updateById = async (req, res) => {
+  const schema = Joi.object({
+    id: Joi.number().integer().required(),
+    date: Joi.string().required(),
+    amount: Joi.number().min(1).required(),
+    description: Joi.string().min(1).required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    res.status(400).send(error.details[0].message);
+    return;
+  }
 
-//   const expense = {
-//     id: req.body.id,
-//     month: req.body.month,
-//     usage: req.body.usage,
-//     cost: req.body.cost,
-//   };
+  const expense = {
+    id: req.body.id,
+    date: req.body.date,
+    amount: req.body.amount,
+    description: req.body.description,
+  };
 
-//   try {
-//     const response = await _updateById(expense);
-//     if (response) {
-//       res.send(expense);
-//     }
-//   } catch (e) {
-//     res.sendStatus(500);
-//   }
-// };
+  try {
+    const response = await expenses.updateById(expense);
+    if (response) {
+      res.send(expense);
+    }
+  } catch (e) {
+    res.sendStatus(500);
+  }
+};
 
 const deleteById = async (req, res) => {
   const id = parseInt(req.params.id, 10);
@@ -116,5 +116,4 @@ const deleteById = async (req, res) => {
   }
 };
 
-module.exports = { getExpenses, addExpense, deleteById, getByID };
-// updateById,
+module.exports = { getExpenses, addExpense, deleteById, getByID, updateById };

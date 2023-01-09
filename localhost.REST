@@ -12,3 +12,17 @@ Content-Type: application/json
 }
 
 ###
+
+DELETE http://localhost:5000/api/expenses/2
+
+###
+
+PUT http://localhost:5000/api/expenses/
+Content-Type: application/json
+
+{
+    "id": 98,
+    "date": "2022-01-15",
+    "amount": 955.00,
+    "description": "test2"
+}
