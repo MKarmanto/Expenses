@@ -31,6 +31,7 @@ describe("expenses routes", () => {
   });
   //TODO: delete rows affected rows after each test
   describe("POST /expenses", () => {
+    let postId;
     test("should create a new expense", async () => {
       const expense = {
         date: "2023-01-01",
@@ -41,6 +42,7 @@ describe("expenses routes", () => {
         .post("/api/expenses")
         .set("Accept", "application/json")
         .send(expense);
+      postId = response.body.insertId;
 
       expect(response.status).toEqual(201);
       expect(response.headers["content-type"]).toMatch(/json/);
@@ -48,13 +50,37 @@ describe("expenses routes", () => {
       expect(response.body.amount).toEqual(expense.amount);
       expect(response.body.date).toEqual(expense.date);
     });
+    afterAll(async () => {
+      await request(app).delete(`/api/expenses/${postId}`);
+    });
   });
 
   describe("DELETE /expenses/:id", () => {
-    test("should return 200 and valid JSON", async () => {
-      const response = await request(app).delete("/expenses/1");
-      expect(response.status).toBe(200);
-      expect(response.type).toBe("application/json");
+    test("should check that expense with id exists", async () => {
+      const response = await request(app)
+        .delete("/api/expenses/11111")
+        .set("Accept", "application/json");
+
+      expect(response.status).toEqual(404);
+      expect(response.text).toEqual("Not Found");
+    });
+    test("should delete the expense by id", async () => {
+      const expense = {
+        date: "2022-01-15",
+        amount: 500.0,
+        description: "test3",
+      };
+      const postResponse = await request(app)
+        .post("/api/exepenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      const postId = postResponse.body.id;
+
+      const response = await request(app)
+        .delete(`/api/expenses/${postId}`)
+        .set("Accept", "application/json");
+      expect(response.status).toEqual(200);
+      expect(response.text).toEqual("Expense deleted");
     });
   });
 

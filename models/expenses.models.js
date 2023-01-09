@@ -71,15 +71,19 @@ const expenses = {
   //       }
   //     );
   //   }),
-  // deleteById: (id) =>
-  //   new Promise((resolve, reject) => {
-  //     query("DELETE FROM expenses WHERE id = ?;", [id], (err, result) => {
-  //       if (err) {
-  //         reject(err);
-  //       }
-  //       resolve(result);
-  //     });
-  //   }),
+  deleteById: (id) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "DELETE FROM expenses WHERE id = ?;",
+        [id],
+        (err, result) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(result);
+        }
+      );
+    }),
 };
 
 module.exports = expenses;
