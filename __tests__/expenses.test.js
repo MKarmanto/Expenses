@@ -50,13 +50,13 @@ describe("expenses routes", () => {
     });
   });
 
-  //   describe("DELETE /expenses/:id", () => {
-  //     test("should return 200 and valid JSON", async () => {
-  //       const response = await request(app).delete("/expenses/1");
-  //       expect(response.status).toBe(200);
-  //       expect(response.type).toBe("application/json");
-  //     });
-  //   });
+  describe("DELETE /expenses/:id", () => {
+    test("should return 200 and valid JSON", async () => {
+      const response = await request(app).delete("/expenses/1");
+      expect(response.status).toBe(200);
+      expect(response.type).toBe("application/json");
+    });
+  });
 
   //   describe("PUT /expenses/:id", () => {
   //     let postId;

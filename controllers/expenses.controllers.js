@@ -98,25 +98,24 @@ const addExpense = async (req, res) => {
 //   }
 // };
 
-// const deleteById = async (req, res) => {
-//   const id = parseInt(req.params.id, 10);
-//   try {
-//     const result = await getById(id);
-//     if (result.length === 0) {
-//       res.status(404).send("Not Found");
-//       return;
-//     }
+const deleteById = async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  try {
+    const result = await getById(id);
+    if (result.length === 0) {
+      res.status(404).send("Not Found");
+      return;
+    }
 
-//     const response = await _deleteById(id);
-//     if (response.affectedRows === 1) {
-//       res.status(200).send("expense deleted");
-//     }
-//   } catch (e) {
-//     res.sendStatus(500);
-//   }
-// };
+    const response = await _deleteById(id);
+    if (response.affectedRows === 1) {
+      res.status(200).send("expense deleted");
+    }
+  } catch (e) {
+    res.sendStatus(500);
+  }
+};
 
-module.exports = { getExpenses, addExpense };
+module.exports = { getExpenses, addExpense, deleteById };
 // getByID,
 // updateById,
-// deleteById,
