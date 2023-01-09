@@ -45,8 +45,8 @@ describe("expenses routes", () => {
       expect(response.status).toEqual(201);
       expect(response.headers["content-type"]).toMatch(/json/);
       expect(response.body.id).toBeTruthy();
-      expect(response.body.date).toEqual(expense.date);
       expect(response.body.amount).toEqual(expense.amount);
+      expect(response.body.date).toEqual(expense.date);
     });
   });
 
