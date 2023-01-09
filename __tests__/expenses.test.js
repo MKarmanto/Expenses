@@ -42,7 +42,7 @@ describe("expenses routes", () => {
         .post("/api/expenses")
         .set("Accept", "application/json")
         .send(expense);
-      postId = response.body.insertId;
+      postId = response.body.id;
 
       expect(response.status).toEqual(201);
       expect(response.headers["content-type"]).toMatch(/json/);
@@ -51,7 +51,9 @@ describe("expenses routes", () => {
       expect(response.body.date).toEqual(expense.date);
     });
     afterAll(async () => {
-      await request(app).delete(`/api/expenses/${postId}`);
+      await request(app)
+        .delete(`/api/expenses/${postId}`)
+        .set("Accept", "application/json");
     });
   });
 
