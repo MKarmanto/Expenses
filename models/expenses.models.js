@@ -23,19 +23,19 @@ const expenses = {
         }
       );
     }),
-  // getByMonth: (month) =>
-  //   new Promise((resolve, reject) => {
-  //     query(
-  //       "SELECT * FROM expenses WHERE MONTH(date) = ?",
-  //       month,
-  //       (err, result) => {
-  //         if (err) {
-  //           reject(err);
-  //         }
-  //         resolve(result);
-  //       }
-  //     );
-  //   }),
+  getByMonth: (month) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT * FROM expenses WHERE MONTH(date) = ?",
+        month,
+        (err, result) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(result);
+        }
+      );
+    }),
   // getBySearch: (search) =>
   //   new Promise((resolve, reject) => {
   //     query(

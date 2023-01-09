@@ -29,7 +29,7 @@ const getByID = async (req, res) => {
 const getByMonth = async (req, res) => {
   const month = req.params.month;
   try {
-    const response = await getByMonth(month);
+    const response = await expenses.getByMonth(month);
     if (response) {
       res.send(response);
     } else {

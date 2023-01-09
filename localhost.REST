@@ -26,3 +26,9 @@ Content-Type: application/json
     "amount": 955.00,
     "description": "test2"
 }
+
+###
+
+GET http://localhost:5000/api/expenses/month/01
+
+###
