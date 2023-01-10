@@ -10,6 +10,7 @@ const expenses = {
         resolve(result);
       });
     }),
+
   getById: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
@@ -23,6 +24,7 @@ const expenses = {
         }
       );
     }),
+
   getByMonth: (month) =>
     new Promise((resolve, reject) => {
       connection.query(
@@ -36,6 +38,7 @@ const expenses = {
         }
       );
     }),
+
   getBySearch: (search) =>
     new Promise((resolve, reject) => {
       connection.query(
@@ -49,6 +52,7 @@ const expenses = {
         }
       );
     }),
+
   addExpense: (expense) =>
     new Promise((resolve, reject) => {
       connection.query(

@@ -31,7 +31,12 @@ const getByMonth = async (req, res) => {
   try {
     const response = await expenses.getByMonth(month);
     if (response) {
-      res.send(response);
+      if (response.length === 0) {
+        res.status(404).send("No results found");
+      } else {
+        const total = response.reduce((acc, cur) => acc + cur.amount, 0);
+        res.send({ response, total });
+      }
     } else {
       res.status(404).send("Not Found");
     }
