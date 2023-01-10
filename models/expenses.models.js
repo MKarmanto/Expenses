@@ -42,6 +42,10 @@ const expenses = {
   getBySearch: (search) =>
     new Promise((resolve, reject) => {
       connection.query(
+        //search.column is the column name, search.search is the search term
+        // ?? is a placeholder for the column name
+        // ? is a placeholder for the search term
+        // % is a wildcard for any number of characters
         "SELECT * FROM expenses WHERE ?? LIKE ?",
         [search.column, "%" + search.search + "%"],
         (err, result) => {
