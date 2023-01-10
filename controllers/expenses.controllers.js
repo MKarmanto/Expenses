@@ -5,7 +5,8 @@ const getExpenses = async (req, res) => {
   try {
     const response = await expenses.getAll();
     if (response) {
-      res.send(response);
+      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ response, total });
     }
   } catch (e) {
     res.sendStatus(500);
@@ -17,7 +18,8 @@ const getByID = async (req, res) => {
   try {
     const response = await expenses.getById(id);
     if (response.length === 1) {
-      res.send(response[0]);
+      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ response, total });
     } else {
       res.status(404).send("No ID Found");
     }

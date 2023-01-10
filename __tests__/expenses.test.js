@@ -21,12 +21,14 @@ describe("expenses routes", () => {
       expect(response.status).toBe(200);
       expect(response.type).toBe("application/json");
     });
-    // test("should return expenses sorted by date"),
-    //   async () => {
-    //     const response = await request(app).get("/expenses?sort=date");
-    //     expect(response.status).toBe(200);
-    //     expect(response.type).toBe("application/json");
-    //   };
+    test("should return expenses from specific search", async () => {
+      const response = await request(app).get(
+        "/api/expenses/search?description=test"
+      );
+      expect(response.status).toBe(200);
+      expect(response.type).toBe("application/json");
+      expect(response.body[0].description).toBe("test");
+    });
   });
 
   describe("POST /expenses", () => {
@@ -41,7 +43,7 @@ describe("expenses routes", () => {
         .post("/api/expenses")
         .set("Accept", "application/json")
         .send(expense);
-      // postId = response.body.id;
+      postId = response.body.id;
 
       expect(response.status).toEqual(201);
       expect(response.headers["content-type"]).toMatch(/json/);

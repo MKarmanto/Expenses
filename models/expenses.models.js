@@ -43,7 +43,7 @@ const expenses = {
     new Promise((resolve, reject) => {
       connection.query(
         "SELECT * FROM expenses WHERE ?? LIKE ?",
-        [search.column, search.search],
+        [search.column, "%" + search.search + "%"],
         (err, result) => {
           if (err) {
             reject(err);
