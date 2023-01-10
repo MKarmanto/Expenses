@@ -75,6 +75,8 @@ describe("expenses routes", () => {
       const expense = {
         date: "2022-01-15",
         amount: 500.0,
+        shop: "test-shop",
+        category: "test-category",
         description: "test3",
       };
       const postResponse = await request(app)
