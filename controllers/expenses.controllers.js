@@ -19,7 +19,7 @@ const getByID = async (req, res) => {
     if (response.length === 1) {
       res.send(response[0]);
     } else {
-      res.status(404).send("Not Found");
+      res.status(404).send("No ID Found");
     }
   } catch (e) {
     res.sendStatus(500);
@@ -30,15 +30,11 @@ const getByMonth = async (req, res) => {
   const month = req.params.month;
   try {
     const response = await expenses.getByMonth(month);
-    if (response) {
-      if (response.length === 0) {
-        res.status(404).send("No results found");
-      } else {
-        const total = response.reduce((acc, cur) => acc + cur.amount, 0);
-        res.send({ response, total });
-      }
+    if (response.length > 0) {
+      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ response, total });
     } else {
-      res.status(404).send("Not Found");
+      res.status(404).send("No Results Found");
     }
   } catch (e) {
     res.sendStatus(500);
@@ -54,15 +50,11 @@ const getBySearch = async (req, res) => {
   };
   try {
     const response = await expenses.getBySearch(search);
-    if (response) {
-      if (response.length === 0) {
-        res.status(404).send("No results found");
-      } else {
-        const total = response.reduce((acc, cur) => acc + cur.amount, 0);
-        res.send({ response, total });
-      }
+    if (response.length > 0) {
+      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ response, total });
     } else {
-      res.status(404).send("Not Found");
+      res.status(404).send("No Results Found");
     }
   } catch (e) {
     res.sendStatus(500);
