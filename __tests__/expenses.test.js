@@ -23,11 +23,11 @@ describe("expenses routes", () => {
     });
     test("should return expenses from specific search", async () => {
       const response = await request(app).get(
-        "/api/expenses/search?description=test"
+        "/api/expenses/search?description=bi-weekly&groceries"
       );
       expect(response.status).toBe(200);
       expect(response.type).toBe("application/json");
-      expect(response.body[0].description).toBe("test");
+      expect(response.body.response[0].description).toBe("bi-weekly groceries");
     });
   });
 
