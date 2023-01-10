@@ -40,6 +40,23 @@ const getByMonth = async (req, res) => {
   }
 };
 
+//TODO fix this
+//Parse querystring.parse
+//use objectkeys 0 and 1
+const getBySearch = async (req, res) => {
+  const search = { column: req.query.shop, search: req.query.search };
+  try {
+    const response = await expenses.getBySearch(search);
+    if (response) {
+      res.send(response);
+    } else {
+      res.status(404).send("Not Found");
+    }
+  } catch (e) {
+    res.sendStatus(500);
+  }
+};
+
 const addExpense = async (req, res) => {
   const schema = Joi.object({
     date: Joi.string().min(1).required(),
@@ -123,4 +140,5 @@ module.exports = {
   getByID,
   updateById,
   getByMonth,
+  getBySearch,
 };

@@ -36,19 +36,19 @@ const expenses = {
         }
       );
     }),
-  // getBySearch: (search) =>
-  //   new Promise((resolve, reject) => {
-  //     query(
-  //       "SELECT * FROM expenses WHERE description LIKE ?",
-  //       search,
-  //       (err, result) => {
-  //         if (err) {
-  //           reject(err);
-  //         }
-  //         resolve(result);
-  //       }
-  //     );
-  //   }),
+  getBySearch: (search) =>
+    new Promise((resolve, reject) => {
+      query(
+        "SELECT * FROM expenses WHERE ? LIKE ?",
+        [search.column, search.search],
+        (err, result) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(result);
+        }
+      );
+    }),
   addExpense: (expense) =>
     new Promise((resolve, reject) => {
       connection.query(
