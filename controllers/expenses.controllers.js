@@ -67,7 +67,9 @@ const addExpense = async (req, res) => {
   const schema = Joi.object({
     date: Joi.string().min(1).required(),
     amount: Joi.number().min(1).required(),
-    description: Joi.string().min(1).required(),
+    shop: Joi.string().min(1).required(),
+    category: Joi.string().min(1).required(),
+    description: Joi.string().min(1),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -78,6 +80,8 @@ const addExpense = async (req, res) => {
   const expense = {
     date: req.body.date,
     amount: req.body.amount,
+    shop: req.body.shop,
+    category: req.body.category,
     description: req.body.description,
   };
   try {
@@ -96,6 +100,8 @@ const updateById = async (req, res) => {
     id: Joi.number().integer().required(),
     date: Joi.string().required(),
     amount: Joi.number().min(1).required(),
+    shop: Joi.string().min(1).required(),
+    category: Joi.string().min(1).required(),
     description: Joi.string().min(1).required(),
   });
   const { error } = schema.validate(req.body);
@@ -108,6 +114,8 @@ const updateById = async (req, res) => {
     id: req.body.id,
     date: req.body.date,
     amount: req.body.amount,
+    shop: req.body.shop,
+    category: req.body.category,
     description: req.body.description,
   };
 
