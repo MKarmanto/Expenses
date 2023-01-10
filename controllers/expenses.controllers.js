@@ -40,15 +40,18 @@ const getByMonth = async (req, res) => {
   }
 };
 
-//TODO fix this
-//Parse querystring.parse
-//use objectkeys 0 and 1
 const getBySearch = async (req, res) => {
-  const search = { column: req.query.shop, search: req.query.search };
+  const firstKey = Object.keys(req.query)[0];
+  const firstValue = req.query[firstKey];
+  const search = {
+    column: firstKey,
+    search: firstValue,
+  };
   try {
     const response = await expenses.getBySearch(search);
     if (response) {
-      res.send(response);
+      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ response, total });
     } else {
       res.status(404).send("Not Found");
     }

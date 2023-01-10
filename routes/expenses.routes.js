@@ -12,12 +12,12 @@ const {
 
 const router = express.Router();
 
+router.get("/search", getBySearch);
 router.get("/", getExpenses);
 router.post("/", addExpense);
 router.delete("/:id", deleteById);
 router.get("/:id", getByID);
 router.put("/", updateById);
 router.get("/month/:month", getByMonth);
-router.get("/", getBySearch);
 
 module.exports = router;

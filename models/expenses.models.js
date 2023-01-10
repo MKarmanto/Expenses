@@ -38,8 +38,8 @@ const expenses = {
     }),
   getBySearch: (search) =>
     new Promise((resolve, reject) => {
-      query(
-        "SELECT * FROM expenses WHERE ? LIKE ?",
+      connection.query(
+        "SELECT * FROM expenses WHERE ?? LIKE ?",
         [search.column, search.search],
         (err, result) => {
           if (err) {
@@ -81,7 +81,7 @@ const expenses = {
     new Promise((resolve, reject) => {
       connection.query(
         "DELETE FROM expenses WHERE id = ?;",
-        [id],
+        id,
         (err, result) => {
           if (err) {
             reject(err);
