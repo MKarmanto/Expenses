@@ -1,10 +1,14 @@
 const expenses = require("../models/expenses.models");
 const Joi = require("joi");
 
+// get all expenses
 const getExpenses = async (req, res) => {
   try {
+    // call the model function
     const response = await expenses.getAll();
     if (response) {
+      // if there is a response, sum the amounts
+      // and send the response and total amount
       const total = response.reduce((acc, cur) => acc + cur.amount, 0);
       res.send({ response, total });
     }
@@ -13,6 +17,7 @@ const getExpenses = async (req, res) => {
   }
 };
 
+// get expense by id
 const getByID = async (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {

@@ -135,7 +135,7 @@ describe("expenses routes", () => {
 
     afterAll(async () => {
       await request(app)
-        .delete(`/expenses/${postId}`)
+        .delete(`/api/expenses/${postId}`)
         .set("Accept", "application/json");
       connection.end();
     });
