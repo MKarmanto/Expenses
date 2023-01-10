@@ -1,3 +1,4 @@
+const e = require("express");
 const connection = require("../database/db");
 
 const expenses = {
@@ -60,8 +61,14 @@ const expenses = {
   addExpense: (expense) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "INSERT INTO `expenses` (`date`, `amount`, `description`) VALUES (?,?,?)",
-        [expense.date, expense.amount, expense.description],
+        "INSERT INTO `expenses` (`date`, `amount`, `shop`, `category`,`description`) VALUES (?,?,?,?,?);",
+        [
+          expense.date,
+          expense.amount,
+          expense.shop,
+          expense.category,
+          expense.description,
+        ],
         (err, result) => {
           if (err) {
             reject(err);
