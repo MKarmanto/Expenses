@@ -99,6 +99,8 @@ describe("expenses routes", () => {
       const expense = {
         date: "2023-01-01",
         amount: 100,
+        shop: "test-shop",
+        category: "test-category",
         description: "test3",
       };
       const postResponse = await request(app)
@@ -112,6 +114,8 @@ describe("expenses routes", () => {
       const expense = {
         id: postId,
         date: "2022-01-15",
+        shop: "test-shop2",
+        category: "test-category2",
         amount: 200,
         description: "testUpdated",
       };
@@ -123,6 +127,8 @@ describe("expenses routes", () => {
       expect(response.status).toEqual(200);
       expect(response.body.id).toEqual(postId);
       expect(response.body.date).toEqual("2022-01-15");
+      expect(response.body.shop).toEqual("test-shop2");
+      expect(response.body.category).toEqual("test-category2");
       expect(response.body.amount).toEqual(200);
       expect(response.body.description).toEqual("testUpdated");
     });
