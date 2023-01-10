@@ -37,7 +37,9 @@ describe("expenses routes", () => {
       const expense = {
         date: "2023-01-01",
         amount: 100,
-        description: "test",
+        shop: "test-shop",
+        category: "test-category",
+        description: "test-description",
       };
       const response = await request(app)
         .post("/api/expenses")
@@ -49,6 +51,8 @@ describe("expenses routes", () => {
       expect(response.headers["content-type"]).toMatch(/json/);
       expect(response.body.id).toBeTruthy();
       expect(response.body.amount).toEqual(expense.amount);
+      expect(response.body.shop).toEqual(expense.shop);
+      expect(response.body.category).toEqual(expense.category);
       expect(response.body.date).toEqual(expense.date);
     });
     afterAll(async () => {
