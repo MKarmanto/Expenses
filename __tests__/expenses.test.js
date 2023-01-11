@@ -29,6 +29,21 @@ describe("expenses routes", () => {
       expect(response.type).toBe("application/json");
       expect(response.body.response[0].description).toBe("bi-weekly groceries");
     });
+    test("should return expenses from specific id", async () => {
+      const response = await request(app).get("/api/expenses/1");
+      expect(response.status).toBe(200);
+      expect(response.type).toBe("application/json");
+      expect(response.body.response[0].id).toBe(1);
+    });
+    test("should return error due to invalid column in search", async () => {
+      const response = await request(app).get(
+        "/api/expenses/search?invalid=test"
+      );
+      expect(response.status).toBe(400);
+      expect(response.text).toEqual(
+        '"column" must be one of [date, amount, shop, category, description]'
+      );
+    });
   });
 
   describe("POST /expenses", () => {
@@ -55,6 +70,24 @@ describe("expenses routes", () => {
       expect(response.body.category).toEqual(expense.category);
       expect(response.body.date).toEqual(expense.date);
     });
+    test("should return 400 if amount is not a number", async () => {
+      const expense = {
+        date: "2023-01-01",
+        amount: "test",
+        shop: "test-shop",
+        category: "test-category",
+        description: "test-description",
+      };
+      const response = await request(app)
+        .post("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      postId = response.body.id;
+
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"amount" must be a number');
+    });
+
     afterAll(async () => {
       await request(app)
         .delete(`/api/expenses/${postId}`)
