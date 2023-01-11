@@ -105,7 +105,7 @@ const getBySearch = async (req, res) => {
 // add an expense
 const addExpense = async (req, res) => {
   const schema = Joi.object({
-    date: Joi.string().min(1).required(),
+    date: Joi.string().isoDate().min(1).required(),
     amount: Joi.number().min(1).required(),
     shop: Joi.string().min(1).required(),
     category: Joi.string().min(1).required(),
@@ -138,7 +138,7 @@ const addExpense = async (req, res) => {
 const updateById = async (req, res) => {
   const schema = Joi.object({
     id: Joi.number().integer().required(),
-    date: Joi.string().required(),
+    date: Joi.string().isoDate().required(),
     amount: Joi.number().min(1).required(),
     shop: Joi.string().min(1).required(),
     category: Joi.string().min(1).required(),

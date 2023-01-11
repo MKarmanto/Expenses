@@ -29,7 +29,7 @@ describe("expenses routes", () => {
       expect(response.type).toBe("application/json");
       expect(response.body.response[0].description).toBe("bi-weekly groceries");
     });
-    test("should return expenses from specific id", async () => {
+    test("should return expenses with specific id", async () => {
       const response = await request(app).get("/api/expenses/1");
       expect(response.status).toBe(200);
       expect(response.type).toBe("application/json");
@@ -48,6 +48,11 @@ describe("expenses routes", () => {
 
   describe("POST /expenses", () => {
     let postId;
+    afterEach(async () => {
+      await request(app)
+        .delete(`/api/expenses/${postId}`)
+        .set("Accept", "application/json");
+    });
     test("should create a new expense", async () => {
       const expense = {
         date: "2023-01-01",
@@ -87,16 +92,78 @@ describe("expenses routes", () => {
       expect(response.status).toEqual(400);
       expect(response.text).toEqual('"amount" must be a number');
     });
+    test("should return 400 if date is not a valid date", async () => {
+      const expense = {
+        date: "test",
+        amount: 100,
+        shop: "test-shop",
+        category: "test-category",
+        description: "test-description",
+      };
+      const response = await request(app)
+        .post("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      postId = response.body.id;
 
-    afterAll(async () => {
-      await request(app)
-        .delete(`/api/expenses/${postId}`)
-        .set("Accept", "application/json");
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"date" must be in iso format');
+    });
+    test("should return 400 if shop is not a string", async () => {
+      const expense = {
+        date: "2023-01-01",
+        amount: 100,
+        shop: 123,
+        category: "test-category",
+        description: "test-description",
+      };
+      const response = await request(app)
+        .post("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      postId = response.body.id;
+
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"shop" must be a string');
+    });
+    test("should return 400 if category is not a string", async () => {
+      const expense = {
+        date: "2023-01-01",
+        amount: 100,
+        shop: "test-shop",
+        category: 123,
+        description: "test-description",
+      };
+      const response = await request(app)
+        .post("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      postId = response.body.id;
+
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"category" must be a string');
+    });
+    test("should return 400 if description is not a string", async () => {
+      const expense = {
+        date: "2023-01-01",
+        amount: 100,
+        shop: "test-shop",
+        category: "test-category",
+        description: 123,
+      };
+      const response = await request(app)
+        .post("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      postId = response.body.id;
+
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"description" must be a string');
     });
   });
 
   describe("DELETE /expenses/:id", () => {
-    test("should check that expense with id exists", async () => {
+    test('should return 404 "Not Found"', async () => {
       const response = await request(app)
         .delete("/api/expenses/11111")
         .set("Accept", "application/json");
@@ -124,6 +191,13 @@ describe("expenses routes", () => {
       expect(response.status).toEqual(200);
       expect(response.text).toEqual("Expense deleted");
     });
+    test("should return 404 if expense with id does not exist", async () => {
+      const response = await request(app)
+        .delete("/api/expenses/11111")
+        .set("Accept", "application/json");
+      expect(response.status).toEqual(404);
+      expect(response.text).toEqual("Not Found");
+    });
   });
 
   describe("PUT /expenses/", () => {
@@ -147,9 +221,9 @@ describe("expenses routes", () => {
       const expense = {
         id: postId,
         date: "2022-01-15",
+        amount: 200,
         shop: "test-shop2",
         category: "test-category2",
-        amount: 200,
         description: "testUpdated",
       };
 
@@ -165,7 +239,102 @@ describe("expenses routes", () => {
       expect(response.body.amount).toEqual(200);
       expect(response.body.description).toEqual("testUpdated");
     });
-
+    test("should return 400 if id is not a number", async () => {
+      const expense = {
+        id: "test",
+        date: "2022-01-15",
+        amount: 200,
+        shop: "test-shop2",
+        category: "test-category2",
+        description: "testUpdated",
+      };
+      const response = await request(app)
+        .put("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"id" must be a number');
+    });
+    test("should return 400 if date is not in iso format", async () => {
+      const expense = {
+        id: postId,
+        date: "test",
+        amount: 200,
+        shop: "test-shop2",
+        category: "test-category2",
+        description: "testUpdated",
+      };
+      const response = await request(app)
+        .put("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"date" must be in iso format');
+    });
+    test("should return 400 if amount is not a number", async () => {
+      const expense = {
+        id: postId,
+        date: "2022-01-15",
+        amount: "test",
+        shop: "test-shop2",
+        category: "test-category2",
+        description: "testUpdated",
+      };
+      const response = await request(app)
+        .put("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"amount" must be a number');
+    });
+    test("should return 400 if shop is not a string", async () => {
+      const expense = {
+        id: postId,
+        date: "2022-01-15",
+        amount: 200,
+        shop: 123,
+        category: "test-category2",
+        description: "testUpdated",
+      };
+      const response = await request(app)
+        .put("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"shop" must be a string');
+    });
+    test("should return 400 if category is not a string", async () => {
+      const expense = {
+        id: postId,
+        date: "2022-01-15",
+        amount: 200,
+        shop: "test-shop2",
+        category: 123,
+        description: "testUpdated",
+      };
+      const response = await request(app)
+        .put("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"category" must be a string');
+    });
+    test("should return 400 if description is not a string", async () => {
+      const expense = {
+        id: postId,
+        date: "2022-01-15",
+        amount: 200,
+        shop: "test-shop2",
+        category: "test-category2",
+        description: 123,
+      };
+      const response = await request(app)
+        .put("/api/expenses")
+        .set("Accept", "application/json")
+        .send(expense);
+      expect(response.status).toEqual(400);
+      expect(response.text).toEqual('"description" must be a string');
+    });
     afterAll(async () => {
       await request(app)
         .delete(`/api/expenses/${postId}`)
