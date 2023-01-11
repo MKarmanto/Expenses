@@ -12,6 +12,11 @@ const {
 
 const router = express.Router();
 
+/**
+ * @description This is the expenses routes.
+ * Each route calls the appropriate controller function found in
+ * expenses.controllers.js.
+ */
 router.get("/search", getBySearch);
 router.get("/", getExpenses);
 router.post("/", addExpense);

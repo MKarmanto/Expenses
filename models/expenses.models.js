@@ -1,32 +1,42 @@
 const e = require("express");
 //connection to database
 const connection = require("../database/db");
+
 /**
- * @description This is the expenses model
- * @param from expenses.controllers.js
- * @returns {object} promise with SQL query results
+ * @description This is the expenses model.
+ * All params from expenses.controllers.js.
+ * @param expenses holds all the functions.
+ * All functions @returns {object} promise with SQL query results.
  *
  */
+
 const expenses = {
-  // get all expenses
+  /**
+   * @description Get all expenses.
+   * Query the database and get every row from the expenses table.
+   * If there is an error, reject the promise.
+   * If there is no error, resolve the promise.
+   */
   getAll: () =>
-    // return a promise
     new Promise((resolve, reject) => {
-      // query the database and select all
       connection.query("SELECT * FROM expenses", (err, result) => {
-        // if there is an error, reject the promise
         if (err) {
           reject(err);
         }
-        // if there is no error, resolve the promise
         resolve(result);
       });
     }),
-  // get expense by id
+
+  /**
+   * @description Get expense by id.
+   * Query the database and get the row from the expenses table based on ID.
+   * ? is a placeholder for the id
+   * If there is an error, reject the promise.
+   * If there is no error, resolve the promise.
+   */
   getById: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
-        // ? is a placeholder for the id
         "SELECT * FROM expenses WHERE id = ?",
         id,
         (err, result) => {
@@ -37,11 +47,16 @@ const expenses = {
         }
       );
     }),
-  // get expenses by month
+  /**
+   * @description Get expenses by month.
+   * Query the database and get the rows from the expenses table based on month.
+   * ? is a placeholder for the month as a number.
+   * If there is an error, reject the promise.
+   * If there is no error, resolve the promise with the result.
+   */
   getByMonth: (month) =>
     new Promise((resolve, reject) => {
       connection.query(
-        // ? is a placeholder for the month as a number
         "SELECT * FROM expenses WHERE MONTH(date) = ?",
         month,
         (err, result) => {
@@ -52,17 +67,22 @@ const expenses = {
         }
       );
     }),
-  // get expenses by search
+
+  /**
+   * @description Get expenses by search.
+   * Query the database and get the rows from the expenses table based on search.
+   * ?? is a placeholder for the column name.
+   * ? is a placeholder for the search term.
+   * % is a wildcard to match any number of characters.
+   * @example "test" returns "test", "testUpdated", "1test", "1test1"
+   * if there is an error, reject the promise.
+   * if there is no error, resolve the promise with the result.
+   */
   getBySearch: (search) =>
     new Promise((resolve, reject) => {
       connection.query(
-        // search.column is the column name, search.search is the search term
-        // ?? is a placeholder for the column name
-        // ? is a placeholder for the search term
-        // % is a wildcard to match any number of characters
-        // @example "test" returns "test", "testUpdated", "1test", "1test1"
         "SELECT * FROM expenses WHERE ?? LIKE ?",
-        [search.column, "%" + search.search + "%"],
+        [search.column, "%" + search.searchTerm + "%"],
         (err, result) => {
           if (err) {
             reject(err);
@@ -71,13 +91,20 @@ const expenses = {
         }
       );
     }),
-  // add an expense
+
+  /**
+   * @description Add an expense.
+   * Query the database and add a row to the expenses table.
+   * ? is a placeholder for the values.
+   * each ? is replaced by the value in the array.
+   * the order of the values in the array must match
+   * the order of the ? in the query.
+   * If there is an error, reject the promise.
+   * If there is no error, resolve the promise with the result.
+   */
   addExpense: (expense) =>
     new Promise((resolve, reject) => {
       connection.query(
-        // ? is a placeholder for the values
-        // each ? is replaced by the value in the array
-        // the order of the values in the array must match the order of the ? in the query
         "INSERT INTO `expenses` (`date`, `amount`, `shop`, `category`,`description`) VALUES (?,?,?,?,?);",
         [
           expense.date,
@@ -94,12 +121,18 @@ const expenses = {
         }
       );
     }),
-  // update an expense by ID
+
+  /**
+   * @description Update an expense by ID.
+   * Query the database and update a row in the expenses table.
+   * ? is a placeholder for the values.
+   * each ? is replaced by the value in the array.
+   * If there is an error, reject the promise.
+   * If there is no error, resolve the promise.
+   */
   updateById: (expense) =>
     new Promise((resolve, reject) => {
       connection.query(
-        // ? is a placeholder for the values
-        // each ? is replaced by the value in the array
         "UPDATE expenses SET date = ?, amount = ?, description = ? WHERE id = ?;",
         [expense.date, expense.amount, expense.description, expense.id],
         (err, result) => {
@@ -110,7 +143,14 @@ const expenses = {
         }
       );
     }),
-  // delete an expense by ID
+
+  /**
+   * @description Delete an expense by ID.
+   * Query the database and delete a row from the expenses table.
+   * ? is a placeholder for the id.
+   * If there is an error, reject the promise.
+   * If there is no error, resolve the promise.
+   */
   deleteById: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
