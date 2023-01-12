@@ -5,6 +5,7 @@
   padding: 10px;
   border: 1px solid lightgray;
   margin-bottom: 10px;
+  color: antiquewhite;
 }
 
 .expense p {
@@ -17,4 +18,8 @@
 }
 .submit-button {
   margin-top: 10px;
+}
+.table-dark th,
+.table-dark td {
+  color: white;
 }

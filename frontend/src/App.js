@@ -141,7 +141,7 @@ function App() {
         <h1 className="text-center my-5">Expenses List</h1>
         <div className="row">
           {/*Table for all the data from database*/}
-          <table className="table">
+          <table className="table table-dark">
             <thead>
               <tr>
                 <th>#</th>
