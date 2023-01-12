@@ -1,0 +1,20 @@
+.expense {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid lightgray;
+  margin-bottom: 10px;
+}
+
+.expense p {
+  margin-right: 10px;
+}
+
+.status {
+  text-align: center;
+  font-size: 1.5rem;
+}
+.submit-button {
+  margin-top: 10px;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML5 Page</title>
+  </head>
+  <body>
+    <button id="get">Get</button>
+    <button id="post">Post</button>
+    <button id="delete">Delete</button>
+    <script>
+      const URL = "/api/expenses";
+
+      const getExpenses = async () => {
+        let response = await fetch(URL);
+        let json = await response.json();
+        console.log(json);
+      };
+
+      const postExpense = async (expense) => {
+        const conf = {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(expense),
+        };
+        let response = await fetch(URL, conf);
+        let json = await response.json();
+        console.log(json);
+      };
+
+      const deleteExpense = async (id) => {
+        const conf = { method: "DELETE" };
+        let response = await fetch(URL + "/" + id, conf);
+        console.log(response.status);
+      };
+
+      window.addEventListener("load", () => {
+        document.querySelector("#get").addEventListener("click", getExpenses);
+        document
+          .querySelector("#post")
+          .addEventListener("click", () =>
+            postExpense({
+              date: "2020-01-01",
+              amount: 100,
+              shop: "Test",
+              category: "Test",
+              description: "test",
+            })
+          );
+        document
+          .querySelector("#delete")
+          .addEventListener("click", () => deleteCity(12));
+      });
+    </script>
+  </body>
+</html>
