@@ -1,0 +1,213 @@
+penapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Expenses Tracker API
+  description: API to track everyday expenses.
+  contact:
+    name: Matias Karmanto
+    email: mkarmanto@gmail.com
+servers:
+  - url: http://localhost:5000/api/
+paths:
+  /expenses:
+    get:
+      description: Get all expenses
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    date:
+                      type: string
+                    amount:
+                      type: number
+                    shop:
+                      type: string
+                    category:
+                      type: string
+                    description:
+                      type: string
+        "500":
+          description: Internal Server Error
+    post:
+      description: Create a new expense
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                amount:
+                  type: number
+                shop:
+                  type: string
+                category:
+                  type: string
+                description:
+                  type: string
+      responses:
+        "201":
+          description: Creates a new expense
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  date:
+                    type: string
+                  amount:
+                    type: number
+                  shop:
+                    type: string
+                  category:
+                    type: string
+                  description:
+                    type: string
+        "400":
+          description: Validation Error
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    put:
+      description: Update expense by ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                date:
+                  type: string
+                amount:
+                  type: number
+                shop:
+                  type: string
+                category:
+                  type: string
+                description:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  date:
+                    type: string
+                  amount:
+                    type: number
+                  shop:
+                    type: string
+                  category:
+                    type: string
+                  description:
+                    type: string
+        "400":
+          description: Validation Error
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /expenses/{id}:
+    get:
+      description: Get an expense by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  date:
+                    type: string
+                  amount:
+                    type: number
+                  shop:
+                    type: string
+                  category:
+                    type: string
+                  description:
+                    type: string
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    delete:
+      description: Delete an expense by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Expense deleted
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /expenses/month/{month}:
+    get:
+      description: Get expenses by month
+      parameters:
+        - name: month
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    date:
+                      type: string
+                    amount:
+                      type: number
+                    shop:
+                      type: string
+                    category:
+                      type: string
+                    description:
+                      type: string
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
