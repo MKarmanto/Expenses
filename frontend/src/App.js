@@ -103,14 +103,17 @@ function App() {
       description: expenseDescription.current.value,
     };
     try {
-      const response = await fetch(`http://localhost:5000/api/expenses`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": "token-value",
-        },
-        body: JSON.stringify(postData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND}/api/expenses`,
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": "token-value",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
       if (response.status === 201) {
         console.log("CREATED");
         const data = await response.json();
