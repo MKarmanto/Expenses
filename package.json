@@ -4,6 +4,7 @@
   "description": "Most of us want to know where our money goes. You now have the chance to create a solution to that question. Create an application for tracking your personal expenses.",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "dev": "nodemon index.js",
     "test": "jest --forceExit"
   },

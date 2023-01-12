@@ -182,6 +182,7 @@ function App() {
           {error && <div className="status">{error}</div>}
           {isLoading && <div className="status">Loading data...</div>}
         </div>
+        {/*Form for adding new expenses*/}
         <div className="row my-5">
           <div className="col-md-8 mx-auto">
             <form>
