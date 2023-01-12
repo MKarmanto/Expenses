@@ -20,6 +20,7 @@ function App() {
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   /**
    * @description Fetch expenses from the server
@@ -134,6 +135,19 @@ function App() {
       alert(err);
     }
   };
+  const filteredExpenses = expenses.filter((expense) => {
+    return (
+      expense.id.toString().includes(searchTerm) ||
+      expense.date.includes(searchTerm) ||
+      expense.amount.toString().includes(searchTerm) ||
+      expense.shop.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      expense.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      expense.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+  const filteredTotal = filteredExpenses.reduce((total, expense) => {
+    return total + expense.amount;
+  }, 0);
 
   return (
     <React.Fragment>
@@ -155,12 +169,13 @@ function App() {
               </tr>
             </thead>
             <tbody>
+              {/*Filter using the searchTerm*/}
               {/*Map through the expenses array add index 
               and display the data in the table*/}
               {/*If there is no data, display a message*/}
               {expenses &&
                 expenses.length > 0 &&
-                expenses.map((expense, index) => (
+                filteredExpenses.map((expense, index) => (
                   <tr key={expense.id}>
                     <td>{index + 1}</td>
                     <td>{expense.id}</td>
@@ -181,13 +196,20 @@ function App() {
                 ))}
             </tbody>
           </table>
-          <p>Total expenses: {total}€</p>
+          <p>Total expenses: {Math.round(filteredTotal).toFixed(2)}€</p>
           {error && <div className="status">{error}</div>}
           {isLoading && <div className="status">Loading data...</div>}
         </div>
+        {/*Search bar*/}
+        <input
+          type="text"
+          placeholder="Search expense..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         {/*Form for adding new expenses*/}
         <div className="row my-5">
-          <div className="col-md-8 mx-auto">
+          <div className="col-md-8">
             <form>
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -197,7 +219,7 @@ function App() {
                     className="form-control"
                     ref={expenseDate}
                     id="inputDate"
-                    placeholder="2023-01-01"
+                    placeholder="Date in format: 2023-01-01"
                   />
                 </div>
                 <div className="form-group col-md-6">
@@ -207,7 +229,7 @@ function App() {
                     className="form-control"
                     ref={expenseAmount}
                     id="inputAmount"
-                    placeholder="100.00"
+                    placeholder="How much did you spend?"
                   />
                 </div>
               </div>
@@ -219,7 +241,7 @@ function App() {
                     className="form-control"
                     ref={expenseShop}
                     id="inputShop"
-                    placeholder="Shop name"
+                    placeholder="Where did you spend the money?"
                   />
                 </div>
                 <div className="form-group col-md-6">
@@ -229,18 +251,18 @@ function App() {
                     className="form-control"
                     ref={expenseCategory}
                     id="inputCategory"
-                    placeholder="Category name"
+                    placeholder="What was the category of the expense?"
                   />
                 </div>
               </div>
-              <div className="form-group">
+              <div className="form-group col-md-8">
                 <label htmlFor="inputDescription">Description</label>
                 <input
                   type="text"
                   className="form-control"
                   ref={expenseDescription}
                   id="inputDescription"
-                  placeholder="Expense description"
+                  placeholder="What was the expense for?"
                 />
               </div>
               <button
