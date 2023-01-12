@@ -133,8 +133,15 @@ const expenses = {
   updateById: (expense) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "UPDATE expenses SET date = ?, amount = ?, description = ? WHERE id = ?;",
-        [expense.date, expense.amount, expense.description, expense.id],
+        "UPDATE expenses SET date = ?, amount = ?, shop = ?, category = ?, description = ? WHERE id = ?;",
+        [
+          expense.date,
+          expense.amount,
+          expense.shop,
+          expense.category,
+          expense.description,
+          expense.id,
+        ],
         (err, result) => {
           if (err) {
             reject(err);

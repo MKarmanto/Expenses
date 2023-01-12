@@ -12,16 +12,16 @@ const Joi = require("joi");
 /**
  * @description Get all expenses
  * Call the getAll function from the model.
- * If there is a response, sum the amounts.
- * and send the response and total amount back to the client
+ * If there is a queryResult, sum the amounts.
+ * and send the queryResult and total amount back to the client
  * if there is an error, send a 500 status
  */
 const getExpenses = async (req, res) => {
   try {
-    const response = await expenses.getAll();
-    if (response) {
-      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
-      res.send({ response, total });
+    const queryResult = await expenses.getAll();
+    if (queryResult) {
+      const total = queryResult.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ queryResult, total });
     }
   } catch (e) {
     res.sendStatus(500);
@@ -31,17 +31,17 @@ const getExpenses = async (req, res) => {
 /**
  * @description Get expense by id
  * Call the getById function from the model.
- * If there is a response, sum the amounts.
- * If there is no response, send a 404 status.
+ * If there is a queryResult, sum the amounts.
+ * If there is no queryResult, send a 404 status.
  * If there is an error, send a 500 status
  */
 const getByID = async (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const response = await expenses.getById(id);
-    if (response.length === 1) {
-      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
-      res.send({ response, total });
+    const queryResult = await expenses.getById(id);
+    if (queryResult.length === 1) {
+      const total = queryResult.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ queryResult, total });
     } else {
       res.status(404).send("No ID Found");
     }
@@ -53,17 +53,17 @@ const getByID = async (req, res) => {
 /**
  * @description Get expenses by month
  * Call the getByMonth function from the model.
- * If there is a response, sum the amounts.
- * If there is response, but the object is empty, send a 404 status.
+ * If there is a queryResult, sum the amounts.
+ * If there is queryResult, but the object is empty, send a 404 status.
  * If there is an error, send a 500 status
  */
 const getByMonth = async (req, res) => {
   const month = req.params.month;
   try {
-    const response = await expenses.getByMonth(month);
-    if (response.length > 0) {
-      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
-      res.send({ response, total });
+    const queryResult = await expenses.getByMonth(month);
+    if (queryResult.length > 0) {
+      const total = queryResult.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ queryResult, total });
     } else {
       res.status(404).send("No Results Found");
     }
@@ -79,8 +79,9 @@ const getByMonth = async (req, res) => {
  * Validate the search object.
  * If not valid, send a 400 status with error details.
  * Call the getBySearch function from the model.
- * If there is a response, sum the amounts.
- * If there is response, but the object is empty, send a 404 status.
+ * If there is a queryResult, sum the amounts.
+ * And send the queryResult and total amount back to the client.
+ * If there is queryResult, but the object is empty, send a 404 status.
  * If there is an error, send a 500 status
  * */
 const getBySearch = async (req, res) => {
@@ -110,10 +111,10 @@ const getBySearch = async (req, res) => {
     return;
   }
   try {
-    const response = await expenses.getBySearch(search);
-    if (response.length > 0) {
-      const total = response.reduce((acc, cur) => acc + cur.amount, 0);
-      res.send({ response, total });
+    const queryResult = await expenses.getBySearch(search);
+    if (queryResult.length > 0) {
+      const total = queryResult.reduce((acc, cur) => acc + cur.amount, 0);
+      res.send({ queryResult, total });
     } else {
       res.status(404).send("No Results Found");
     }
@@ -127,7 +128,7 @@ const getBySearch = async (req, res) => {
  * Validate the request body.
  * If not valid send a 400 status with error details.
  * Call the addExpense function from the model.
- * If there is a response, send the added expense back to the client.
+ * If there is a queryResult, send the added expense back to the client.
  * If there is an error, send a 500 status
  */
 const addExpense = async (req, res) => {
@@ -154,9 +155,9 @@ const addExpense = async (req, res) => {
   };
 
   try {
-    const response = await expenses.addExpense(expense);
-    if (response) {
-      expense.id = response.insertId;
+    const queryResult = await expenses.addExpense(expense);
+    if (queryResult) {
+      expense.id = queryResult.insertId;
       res.status(201).send(expense);
     }
   } catch (e) {
@@ -169,7 +170,7 @@ const addExpense = async (req, res) => {
  * Validate the request body.
  * If not valid send a 400 status with error details.
  * Call the updateById function from the model to update the expense in database.
- * If there is a response, send the updated expense back to the client.
+ * If there is a queryResult, send the updated expense back to the client.
  * If there is an error, send a 500 status
  */
 const updateById = async (req, res) => {
@@ -196,8 +197,8 @@ const updateById = async (req, res) => {
   };
 
   try {
-    const response = await expenses.updateById(expense);
-    if (response) {
+    const queryResult = await expenses.updateById(expense);
+    if (queryResult) {
       res.send(expense);
     }
   } catch (e) {
@@ -209,9 +210,9 @@ const updateById = async (req, res) => {
  * @description Delete expense by ID.
  * Get the id from the url.
  * Call the getById function from the model to check that the expense exists.
- * If there is no response, send a 404 status.
+ * If there is no queryResult, send a 404 status.
  * Call the deleteById function from the model to delete the expense.
- * If there is a response, send a 200 status with a message.
+ * If there is a queryResult, send a 200 status with a message.
  * If there is an error, send a 500 status
  *
  */
@@ -223,8 +224,8 @@ const deleteById = async (req, res) => {
       res.status(404).send("Not Found");
       return;
     }
-    const response = await expenses.deleteById(id);
-    if (response.affectedRows === 1) {
+    const queryResult = await expenses.deleteById(id);
+    if (queryResult.affectedRows === 1) {
       res.status(200).send("Expense deleted");
     }
   } catch (e) {

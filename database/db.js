@@ -7,6 +7,7 @@ const connection = mysql.createPool({
   user: process.env.DBUSERNAME,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
+  dateStrings: true,
 });
 
 module.exports = connection;
