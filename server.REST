@@ -1,10 +1,10 @@
 //Get all rows from expenses table.
-GET http://localhost:5000/api/expenses
+GET https://expenses-app-api.onrender.com/api/expenses
 
 ###
 
 //Post a new row to expenses table.
-POST http://localhost:5000/api/expenses
+POST https://expenses-app-api.onrender.com/api/expenses
 Content-Type: application/json
 
 {
@@ -18,12 +18,12 @@ Content-Type: application/json
 ###
 
 //Delete a row from expenses table based on ID in the URL.
-DELETE http://localhost:5000/api/expenses/2
+DELETE https://expenses-app-api.onrender.com/api/expenses/2
 
 ###
 
 //Update a row in expenses table based on ID in the body.
-PUT http://localhost:5000/api/expenses/
+PUT https://expenses-app-api.onrender.com/api/expenses
 Content-Type: application/json
 
 {
@@ -39,12 +39,12 @@ Content-Type: application/json
 
 //Get all rows from expenses table based on month as number in the URL.
 //@example: 01 = January, 02 = February, etc.
-GET http://localhost:5000/api/expenses/month/01
+GET https://expenses-app-api.onrender.com/api/expenses/month/01
 
 ###
 
 //Get all rows from the expenses table based on search term in the URL.
 //First term is the column name, second term is the search term.
-//@example: GET http://localhost:5000/api/expenses/search?description=test
+//@example: GET https://expenses-app-api.onrender.com/api/expenses/search?description=test
 //description is the column, test is the search term.
-GET http://localhost:5000/api/expenses/search?shop=Prisma
+GET https://expenses-app-api.onrender.com/api/expenses/search?shop=Prisma

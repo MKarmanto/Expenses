@@ -30,7 +30,7 @@ function App() {
    * The total amount is stored in the second element of the object.
    */
   useEffect(() => {
-    fetch("http://localhost:5000/api/expenses")
+    fetch(`${process.env.REACT_APP_BACKEND}/api/expenses`)
       .then((res) => {
         if (!res.ok) {
           throw Error("Could not fetch data for that resource");
@@ -65,7 +65,7 @@ function App() {
     try {
       console.log("DELETING " + deletedExpenseID);
       const response = await fetch(
-        `http://localhost:5000/api/expenses/${deletedExpenseID}`,
+        `${process.env.REACT_APP_BACKEND}/api/expenses/${deletedExpenseID}`,
         { method: "delete" }
       );
       if (response.status === 200) {
