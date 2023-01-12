@@ -13,6 +13,7 @@ const expensesRouter = require("./routes/expenses.routes");
  * is GET /api/expenses.
  */
 const app = express();
+app.use(express.static("frontend/build"));
 app.use(
   cors({
     origin: [
@@ -27,7 +28,7 @@ app.use(express.json());
 app.get("/health", (req, res) => {
   res.send("OK");
 });
-app.use(express.static("frontend/build"));
+
 app.use("/api/expenses", expensesRouter);
 
 module.exports = app;
