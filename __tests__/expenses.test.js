@@ -27,13 +27,15 @@ describe("expenses routes", () => {
       );
       expect(response.status).toBe(200);
       expect(response.type).toBe("application/json");
-      expect(response.body.response[0].description).toBe("bi-weekly groceries");
+      expect(response.body.queryResult[0].description).toBe(
+        "Bi-weekly groceries"
+      );
     });
     test("should return expenses with specific id", async () => {
       const response = await request(app).get("/api/expenses/1");
       expect(response.status).toBe(200);
       expect(response.type).toBe("application/json");
-      expect(response.body.response[0].id).toBe(1);
+      expect(response.body.queryResult[0].id).toBe(1);
     });
     test("should return error due to invalid column in search", async () => {
       const response = await request(app).get(
