@@ -14,16 +14,7 @@ const expensesRouter = require("./routes/expenses.routes");
  */
 const app = express();
 app.use(express.static("frontend/build"));
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5000",
-      "http://localhost:3000",
-      "https://expenses-app-api.onrender.com",
-      "https://www.matiaskarmanto.com",
-    ],
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 app.get("/health", (req, res) => {
