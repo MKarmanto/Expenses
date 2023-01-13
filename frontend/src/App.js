@@ -9,6 +9,8 @@ function App() {
   const expenseShop = useRef(null);
   const expenseCategory = useRef(null);
   const expenseDescription = useRef(null);
+  //Variable to store the filtered expenses
+  let filteredExpenses = [];
 
   /**
    * State to store fetched expenses
@@ -135,16 +137,24 @@ function App() {
       alert(err);
     }
   };
-  const filteredExpenses = expenses.filter((expense) => {
-    return (
-      expense.id.toString().includes(searchTerm) ||
-      expense.date.includes(searchTerm) ||
-      expense.amount.toString().includes(searchTerm) ||
-      expense.shop.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      expense.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      expense.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
+
+  /**
+   * @description Filter expenses by search term
+   * If expenses data is loaded, apply the filter
+   */
+  if (expenses) {
+    filteredExpenses = expenses.filter((expense) => {
+      return (
+        expense.id.toString().includes(searchTerm) ||
+        expense.date.includes(searchTerm) ||
+        expense.amount.toString().includes(searchTerm) ||
+        expense.shop.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        expense.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        expense.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    });
+  }
+  //Calculate the total amount of filtered expenses to keep it dynamic
   const filteredTotal = filteredExpenses.reduce((total, expense) => {
     return total + expense.amount;
   }, 0);
@@ -169,12 +179,11 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {/*Filter using the searchTerm*/}
-              {/*Map through the expenses array add index 
+              {/*Map through the filtered array add index 
               and display the data in the table*/}
               {/*If there is no data, display a message*/}
               {expenses &&
-                expenses.length > 0 &&
+                filteredExpenses.length > 0 &&
                 filteredExpenses.map((expense, index) => (
                   <tr key={expense.id}>
                     <td>{index + 1}</td>
@@ -196,6 +205,7 @@ function App() {
                 ))}
             </tbody>
           </table>
+          {/*Display the filteredTotal amount rounded up 2 decimals*/}
           <p>Total expenses: {Math.round(filteredTotal).toFixed(2)}€</p>
           {error && <div className="status">{error}</div>}
           {isLoading && <div className="status">Loading data...</div>}
