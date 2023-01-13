@@ -1,13 +1,15 @@
-penapi: 3.0.0
+openapi: 3.0.0
 info:
   version: 1.0.0
   title: Expenses Tracker API
-  description: API to track everyday expenses.
+  description: Expenses tracking API.
   contact:
     name: Matias Karmanto
     email: mkarmanto@gmail.com
 servers:
-  - url: http://localhost:5000/api/
+  - url: http://localhost:5000/api
+  - url: http://www.matiaskarmanto.com
+  - url: https://expenses-app-api.onrender.com/
 paths:
   /expenses:
     get:
@@ -185,6 +187,66 @@ paths:
           required: true
           schema:
             type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    date:
+                      type: string
+                    amount:
+                      type: number
+                    shop:
+                      type: string
+                    category:
+                      type: string
+                    description:
+                      type: string
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /expenses/search/:
+    get:
+      description: search expenses by parameters
+      parameters:
+        - name: id
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: date
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: amount
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: shop
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: description
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: OK

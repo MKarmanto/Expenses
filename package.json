@@ -1,7 +1,7 @@
 {
-  "name": "2022-wk49-final-project-mkarmanto",
+  "name": "expenses-list-mkarmanto",
   "version": "1.0.0",
-  "description": "Most of us want to know where our money goes. You now have the chance to create a solution to that question. Create an application for tracking your personal expenses.",
+  "description": "Most of us want to know where our money goes. Here's an application for tracking your personal expenses.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
