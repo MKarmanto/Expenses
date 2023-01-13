@@ -20,6 +20,7 @@ app.use(
       "http://localhost:5000",
       "http://localhost:3000",
       "https://expenses-app-api.onrender.com",
+      "https://matiaskarmanto.com",
     ],
   })
 );
