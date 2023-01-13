@@ -2,53 +2,80 @@
 
 ## Backend Development - Final Project
 
-## Topic
-
 ### General Project
 
-Most of us want to know where our money goes. You now have the chance to create a solution to that question. Create an application for tracking your personal expenses.
+Most of us want to know where our money goes. Here is a tool to keep track of all the expenses.  
+You can find test version online at www.matiaskarmanto.com.
 
-### Node instructions
-
-"npm run build" to start the app.
-"npm run test" to run all 21 tests.
 
 ### Project requirements
 
-Database
-.env file
+Prior to starting the app you need to
+1) Create a database and preferably add some data into it.
+2) Create .env-file to manage the database connection.
 
-### SQL Statements to create database
+At the bottom of the file you can find the SQL-statements to create database and to add some data into it.  
+The .env needs to created in project's root-folder (Where you can find app.js for example).  
+This file needs to include
 
-CREATE TABLE IF NOT EXISTS `expenses` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`date` DATE NOT NULL,
-`amount` DECIMAL(6,2) NOT NULL,
-`shop` VARCHAR(60) NOT NULL,
-`category` VARCHAR(60) NOT NULL,
-`description` VARCHAR(60) NOT NULL,
-PRIMARY KEY (`id`));
+HOST=""  
+DBUSERNAME=""  
+PASSWORD=''  
+DATABASE=""  
+PORT=5000  
 
-INSERT INTO expenses (date, amount, shop, category, description) VALUES ('2022-1-10', 99.00, 'Dressmann', 'Clothing', 'Jeans'),
-('2022-2-12', 122.52, 'Lidl', 'Groceries', 'Bi-weekly groceries'),
-('2022-3-18', 242.00, 'CityMarket', 'Groceries', 'Ham & Cheese'),
-('2022-4-1', 9.80, 'Prisma', 'Groceries', 'Candy'),
-('2022-5-22', 49.99, 'Dressmann', 'Clothing', 'Shirt and hat'),
-('2022-6-30', 155.00, 'Lidl', 'Groceries', 'Bi-weekly groceries'),
-('2022-7-4', 38.99, 'CityMarket', 'Groceries', 'Sushi'),
-('2022-8-28', 140.00, 'Prisma', 'Groceries', 'Bi-weekly groceries'),
-('2022-9-15', 432.00, 'Biker Shop', 'Clothing', 'Leather jacket and boots'),
-('2022-10-8', 152.65, 'Lidl', 'Groceries', 'Bi-weekly groceries'),
-('2022-11-1', 405.55, 'CityMarket', 'Groceries', 'Christmas'),
-('2022-12-15', 9999.00, 'Prisma', 'Extra', 'Bicycle for nephew')
+The calls to the API are on default are made at https://localhost:5000/api/expenses or https://expenses-app-api.onrender.com/api/expenses.  
+You can find localhost.REST & server.REST files in the root folder to test out all the endpoints of the API.
+  
+  
+### Node instructions
+
+"npm install" to install dependencies.   
+"npm run start" to start the backend at port defined in .env. Default: http://localhost:5000/
+"cd frontend" to enter the frontend-folder.  
+"npm start" in the frontend folder to start React-frontend at http://localhost:3000, to change the port create .env in frontend folder with PORT=
+
+Also you can  
+"npm run test" in root folder to run all 21 tests done for the project.  
 
 ### Project self evaluation
 
-Solution design: The project was build around MVC pattern and therefore I believe the design of the API is appropriate to the teachings of the course.
+Solution design: The backend of the project was build around MVC pattern and therefore follows the good practices of API architecture.  
+The frontend part could've had bit cleaner design and splitting of the components could've been added. 
 
-Execution:
-Requirements satisfaction: All requirements were met, besides the front-end part.
+Execution: The final product came out better than I expected. Build is deployed, even deployed it in my custom dns www.matiaskarmanto.com and the frontend features really make it application that one could use.  
 
-Coding Style: I used Prettier to enforce coding style and ESLint to enforce code quality.
+Requirements satisfaction: All requirements were met, including 21 tests for all the validation of user input.  
 
-Documentation: The project is documented with README.md and JSDoc.
+Coding Style: I used Prettier to enforce coding style and ESLint to enforce code quality. For my eye even the commenting is pleasant to read and code is easy to follow. Some JSdoc was also added for extra flavour.
+
+Documentation: YAML-file can be found in root folder of the project. README should have instructions and necessary information of the project.  
+
+Bonus Credit: A deployed frontend with /GET, /DELETE & /POST endpoints was implimented.  
+
+### SQL Statements to create database  
+
+CREATE TABLE IF NOT EXISTS `expenses` (  
+`id` int(11) NOT NULL AUTO_INCREMENT,  
+`date` DATE NOT NULL,  
+`amount` DECIMAL(6,2) NOT NULL,  
+`shop` VARCHAR(60) NOT NULL,  
+`category` VARCHAR(60) NOT NULL,  
+`description` VARCHAR(60) NOT NULL,  
+PRIMARY KEY (`id`));
+
+INSERT INTO expenses (date, amount, shop, category, description) VALUES 
+
+('2022-1-10', 99.00, 'Dressmann', 'Clothing', 'Jeans'),  
+('2022-2-12', 122.52, 'Lidl', 'Groceries', 'Bi-weekly groceries'),  
+('2022-3-18', 242.00, 'CityMarket', 'Groceries', 'Ham & Cheese'),  
+('2022-4-1', 9.80, 'Prisma', 'Groceries', 'Candy'),  
+('2022-5-22', 49.99, 'Dressmann', 'Clothing', 'Shirt and hat'),  
+('2022-6-30', 155.00, 'Lidl', 'Groceries', 'Bi-weekly groceries'),  
+('2022-7-4', 38.99, 'CityMarket', 'Groceries', 'Sushi'),  
+('2022-8-28', 140.00, 'Prisma', 'Groceries', 'Bi-weekly groceries'),  
+('2022-9-15', 432.00, 'Biker Shop', 'Clothing', 'Leather jacket and boots'),  
+('2022-10-8', 152.65, 'Lidl', 'Groceries', 'Bi-weekly groceries'),  
+('2022-11-1', 405.55, 'CityMarket', 'Groceries', 'Christmas'),  
+('2022-12-15', 9999.00, 'Prisma', 'Extra', 'Bicycle for nephew')  
+
