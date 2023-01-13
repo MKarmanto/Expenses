@@ -31,9 +31,9 @@ You can find localhost.REST & server.REST files in the root folder to test out a
 ### Node instructions
 
 "npm install" to install dependencies.   
-"npm run start" to start the backend at port defined in .env. Default: http://localhost:5000/
+"npm run start" to start the backend at port defined in .env. Default: http://localhost:5000/  
 "cd frontend" to enter the frontend-folder.  
-"npm start" in the frontend folder to start React-frontend at http://localhost:3000, to change the port create .env in frontend folder with PORT=
+"npm start" in the frontend folder to start React-frontend at http://localhost:3000/, to change the port create .env in frontend folder with PORT=
 
 Also you can  
 "npm run test" in root folder to run all 21 tests done for the project.  
@@ -43,7 +43,7 @@ Also you can
 Solution design: The backend of the project was build around MVC pattern and therefore follows the good practices of API architecture.  
 The frontend part could've had bit cleaner design and splitting of the components could've been added. 
 
-Execution: The final product came out better than I expected. Build is deployed, even deployed it in my custom dns www.matiaskarmanto.com and the frontend features really make it application that one could use.  
+Execution: The final product came out better than I expected. Build is deployed, even deployed it in my custom DNS www.matiaskarmanto.com and the frontend features really make it application that one could use.  
 
 Requirements satisfaction: All requirements were met, including 21 tests for all the validation of user input.  
 
