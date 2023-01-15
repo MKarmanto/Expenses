@@ -5,7 +5,7 @@
 ### General Project
 
 Most of us want to know where our money goes. Here is a tool to keep track of all the expenses.  
-You can find test version online at www.matiaskarmanto.com.
+You can find test version online at www.matiaskarmanto.com. (The server is up at Render.com, so might take a while to start it. Be patient :))
 
 
 ### Project requirements
