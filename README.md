@@ -5,6 +5,7 @@
 ### General Project
 
 Most of us want to know where our money goes. Here is a tool to keep track of all the expenses.  
+The project focused on backend, but frontend was done as bonus.
 You can find the frontend test version online at www.matiaskarmanto.com, which impliments some, but not all the features of the API.  
 The server is up at Render.com, so might take a while to start it. Be patient :)  
    
@@ -36,7 +37,7 @@ PORT=5000
 "npm start" in the frontend folder to start React-frontend at http://localhost:3000/, to change the port create .env in frontend folder with PORT=
 
 Also you can  
-"npm run test" in root folder to run all 21 tests done for the project.  
+"npm run test" in root folder to run all 21 tests done for the project with jest & supertest.  
    
 
 ## API use  
@@ -57,22 +58,7 @@ POST            /api/expenses/                   
 PUT                  /api/expenses/                                                             update certain expense using id in the body to find it  
    
    
-## Project self evaluation
-
-Solution design: The backend of the project was build around MVC pattern and therefore follows the good practices of API architecture.  
-The frontend part could've had bit cleaner design and splitting of the components could've been added. 
-
-Execution: The final product came out better than I expected. Build is deployed, even deployed it in my custom DNS www.matiaskarmanto.com and the frontend features really make it application that one could use.  
-
-Requirements satisfaction: All requirements were met, including 21 tests for all the validation of user input.  
-
-Coding Style: I used Prettier to enforce coding style and ESLint to enforce code quality. For my eye even the commenting is pleasant to read and code is easy to follow. Some JSdoc was also added for extra flavour.
-
-Documentation: YAML-file can be found in root folder of the project. README should have instructions and necessary information of the project.  
-
-Bonus Credit: A deployed frontend with /GET, /DELETE & /POST endpoints was implimented.  
-   
-
+   
 ### SQL Statements to create database  
 
 CREATE TABLE IF NOT EXISTS `expenses` (  
