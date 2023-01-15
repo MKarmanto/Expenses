@@ -11,8 +11,9 @@ You can find test version online at www.matiaskarmanto.com.
 ### Project requirements
 
 Prior to starting the app you need to
-1) Create a database and preferably add some data into it.
-2) Create .env-file to manage the database connection.
+1) Install Node.js (https://nodejs.org/en/)
+2) Create a database and preferably add some data into it.
+3) Create .env-file to manage the database connection.
 
 At the bottom of the file you can find the SQL-statements to create database and to add some data into it.  
 The .env needs to created in project's root-folder (Where you can find app.js for example).  
