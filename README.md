@@ -5,10 +5,12 @@
 ### General Project
 
 Most of us want to know where our money goes. Here is a tool to keep track of all the expenses.  
-You can find test version online at www.matiaskarmanto.com. (The server is up at Render.com, so might take a while to start it. Be patient :))
+You can find the frontend test version online at www.matiaskarmanto.com, which impliments some, but not all the features of the API.  
+The server is up at Render.com, so might take a while to start it. Be patient :)  
+   
+   
 
-
-### Project requirements
+## Project requirements
 
 Prior to starting the app you need to
 1) Install Node.js (https://nodejs.org/en/)
@@ -24,11 +26,8 @@ DBUSERNAME=""
 PASSWORD=''  
 DATABASE=""  
 PORT=5000  
-
-The calls to the API are on default are made at https://localhost:5000/api/expenses or https://expenses-app-api.onrender.com/api/expenses.  
-You can find localhost.REST & server.REST files in the root folder to test out all the endpoints of the API.
-  
-  
+   
+   
 ### Node instructions
 
 "npm install" to install dependencies.   
@@ -38,8 +37,27 @@ You can find localhost.REST & server.REST files in the root folder to test out a
 
 Also you can  
 "npm run test" in root folder to run all 21 tests done for the project.  
+   
 
-### Project self evaluation
+## API use  
+
+The calls to the API are on default are made at https://localhost:5000/api/expenses or https://expenses-app-api.onrender.com/api/expenses.  
+You can find localhost.REST & server.REST files in the root folder to test out all the endpoints of the API.
+  
+  
+GET               /api/expenses                                                             get ALL the expenses   
+GET               /api/expenses/1                                                          get expense by id  
+GET               /api/expenses/month/02                                            get expense by month  
+GET               /api/expense/expense/search?amount=200              get expenses by search (See localhost.REST for more info) 
+
+DELETE         /api/expenses/1                                                          delete expense by id (remove one item from the list)
+
+POST            /api/expenses/                                                            add new expense
+
+PUT                  /api/expenses/                                                             update certain expense using id in the body to find it  
+   
+   
+## Project self evaluation
 
 Solution design: The backend of the project was build around MVC pattern and therefore follows the good practices of API architecture.  
 The frontend part could've had bit cleaner design and splitting of the components could've been added. 
@@ -53,6 +71,7 @@ Coding Style: I used Prettier to enforce coding style and ESLint to enforce code
 Documentation: YAML-file can be found in root folder of the project. README should have instructions and necessary information of the project.  
 
 Bonus Credit: A deployed frontend with /GET, /DELETE & /POST endpoints was implimented.  
+   
 
 ### SQL Statements to create database  
 
