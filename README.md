@@ -3,7 +3,7 @@
 ### General Project
 
 Most of us want to know where our money goes. Here is a tool to keep track of all the expenses.  
-The project was done following principles of test driven development, focusing on backend and adding lightweight frontend with React to support it.
+The project was done following principles of test driven development, focusing on backend and adding lightweight frontend with React to support it.  
 You can find the frontend test version online at www.matiaskarmanto.com, which impliments some, but not all the features of the API.  
 The server is up at Render.com, so might take a while to start it. Be patient :)  
    
