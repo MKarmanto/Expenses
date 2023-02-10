@@ -59,7 +59,7 @@ PUT                  /api/expenses/                
    
    
    
-### SQL Statements to create database  
+## SQL Statements to create database  
 
 CREATE TABLE IF NOT EXISTS `expenses` (  
 `id` int(11) NOT NULL AUTO_INCREMENT,  
